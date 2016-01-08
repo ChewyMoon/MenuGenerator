@@ -1,6 +1,6 @@
 ﻿namespace MenuGenerator.MenuBinding
 {
-    enum MenuValueType
+    public enum MenuValueType
     {
         /// <summary>
         ///     No type.
