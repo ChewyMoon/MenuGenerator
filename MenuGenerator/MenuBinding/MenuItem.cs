@@ -21,6 +21,14 @@
         public string Name { get; set; } = string.Empty;
 
         /// <summary>
+        ///     Gets or sets the owner.
+        /// </summary>
+        /// <value>
+        ///     The owner.
+        /// </value>
+        public Menu Owner { get; set; }
+
+        /// <summary>
         ///     Gets or sets the value.
         /// </summary>
         /// <value>

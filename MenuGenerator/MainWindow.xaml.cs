@@ -22,9 +22,9 @@
 
             Updater.CheckForUpdates();
 
-            this.Menu.SubMenus.Add(
+            this.Menu.AddSubMenu(
                 new Menu() { DisplayName = "Test1" }.AddMenuItem(new MenuItem() { DisplayName = "Item1" }));
-            this.Menu.Items.Add(new MenuItem() { DisplayName = "Item2" });
+            this.Menu.AddMenuItem(new MenuItem() { DisplayName = "Item2" });
             this.Menu.IsRootMenu = true;
 
             this.UpdateTree();
@@ -99,7 +99,7 @@
             }
 
             var menu = (Menu)selectedItem.Tag;
-            menu.SubMenus.Add(new Menu() { DisplayName = "New Menu", Name = "New Menu" });
+            menu.AddSubMenu(new Menu() { DisplayName = "New Menu", Name = "New Menu" });
 
             this.UpdateTree();
         }

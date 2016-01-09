@@ -42,6 +42,14 @@
         public string Name { get; set; } = string.Empty;
 
         /// <summary>
+        ///     Gets or sets the parent.
+        /// </summary>
+        /// <value>
+        ///     The parent.
+        /// </value>
+        public Menu Parent { get; set; }
+
+        /// <summary>
         ///     Gets or sets the sub menus.
         /// </summary>
         /// <value>
@@ -60,6 +68,7 @@
         /// <returns></returns>
         public Menu AddMenuItem(MenuItem item)
         {
+            item.Owner = this;
             this.Items.Add(item);
             return this;
         }
@@ -71,6 +80,7 @@
         /// <returns></returns>
         public Menu AddSubMenu(Menu menu)
         {
+            menu.Parent = this;
             this.SubMenus.Add(menu);
             return this;
         }
