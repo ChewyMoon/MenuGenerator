@@ -1,5 +1,6 @@
 ﻿namespace MenuGenerator
 {
+    using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
 
@@ -9,7 +10,7 @@
     /// <summary>
     ///     Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         #region Constructors and Destructors
 
@@ -22,9 +23,8 @@
 
             Updater.CheckForUpdates();
 
-            this.Menu.AddSubMenu(
-                new Menu() { DisplayName = "Test1" }.AddMenuItem(new MenuItem() { DisplayName = "Item1" }));
-            this.Menu.AddMenuItem(new MenuItem() { DisplayName = "Item2" });
+            this.Menu.AddSubMenu(new Menu { DisplayName = "Test1" }.AddMenuItem(new MenuItem { DisplayName = "Item1" }));
+            this.Menu.AddMenuItem(new MenuItem { DisplayName = "Item2" });
             this.Menu.IsRootMenu = true;
 
             this.UpdateTree();
@@ -40,11 +40,33 @@
         /// <value>
         ///     The menu.
         /// </value>
-        public Menu Menu { get; set; } = new Menu() { Name = "Menu", DisplayName = "Menu" };
+        public Menu Menu { get; set; } = new Menu { Name = "Menu", DisplayName = "Menu" };
 
         #endregion
 
         #region Methods
+
+        /// <summary>
+        ///     Handles the Click event of the AddItemButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        private void AddItemButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (this.TreeView.SelectedItem == null)
+            {
+                this.Menu.AddMenuItem(new MenuItem { DisplayName = "New MenuItem", Name = "New MenuItem" });
+                this.UpdateTree();
+                return;
+            }
+
+            var selectedItem = (TreeViewItem)this.TreeView.SelectedItem;
+
+            var menu = selectedItem.Tag as Menu ?? ((MenuItem)selectedItem.Tag).Owner;
+            menu.AddMenuItem(new MenuItem { DisplayName = "New MenuItem", Name = "New MenuItem" });
+
+            this.UpdateTree();
+        }
 
         /// <summary>
         ///     Adds the menu.
@@ -67,12 +89,9 @@
                 }
             }
 
-            foreach (var item in menu.Items)
+            foreach (
+                var treeItem in menu.Items.Select(item => new TreeViewItem { Header = item.DisplayName, Tag = item }))
             {
-                var treeItem = new TreeViewItem();
-                treeItem.Header = item.DisplayName;
-                treeItem.Tag = item;
-
                 parent.Items.Add(treeItem);
             }
         }
@@ -86,20 +105,54 @@
         {
             if (this.TreeView.SelectedItem == null)
             {
-                MessageBox.Show("Please select a menu!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+                this.Menu.AddSubMenu(new Menu { DisplayName = "New Menu", Name = "New Menu" });
+                this.UpdateTree();
                 return;
             }
 
             var selectedItem = (TreeViewItem)this.TreeView.SelectedItem;
 
-            if (selectedItem.Tag is MenuItem)
+            var menu = selectedItem.Tag as Menu ?? ((MenuItem)selectedItem.Tag).Owner;
+            menu.AddSubMenu(new Menu { DisplayName = "New Menu", Name = "New Menu" });
+
+            this.UpdateTree();
+        }
+
+        /// <summary>
+        ///     Handles the Click event of the RemoveObjectButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        private void RemoveObjectButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (this.TreeView.SelectedItem == null)
             {
-                MessageBox.Show("Please select a menu!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            var menu = (Menu)selectedItem.Tag;
-            menu.AddSubMenu(new Menu() { DisplayName = "New Menu", Name = "New Menu" });
+            var item = ((TreeViewItem)this.TreeView.SelectedItem).Tag;
+
+            if (item is Menu)
+            {
+                var menu = (Menu)item;
+
+                if (menu == this.Menu)
+                {
+                    MessageBox.Show(
+                        "You can't delete the root menu!",
+                        "Error!",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error);
+                    return;
+                }
+
+                menu.Parent.SubMenus.Remove(menu);
+            }
+            else if (item is MenuItem)
+            {
+                var menuItem = (MenuItem)item;
+                menuItem.Owner.Items.Remove(menuItem);
+            }
 
             this.UpdateTree();
         }
@@ -111,11 +164,8 @@
         {
             this.TreeView.Items.Clear();
 
-            // Add main menu
             var mainMenuItem = new TreeViewItem { Header = this.Menu.DisplayName, IsExpanded = true, Tag = this.Menu };
-
             this.AddMenu(this.Menu, mainMenuItem);
-
             this.TreeView.Items.Add(mainMenuItem);
         }
 

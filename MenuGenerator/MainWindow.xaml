@@ -11,7 +11,7 @@
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-        Title="MainWindow" Height="394.492" Width="630.297">
+        Title="MainWindow" Height="424.58" Width="804.141">
     <Grid>
         <TreeView x:Name="TreeView" HorizontalAlignment="Left" Width="225" ItemsSource="{Binding Menu}">
             <!--<TreeView.Resources>
@@ -29,10 +29,12 @@
 
         <GroupBox x:Name="groupBox" Header="Item Control" Height="90" Margin="238,21,17,0" VerticalAlignment="Top">
             <Grid>
-                <Button x:Name="AddMenuButton" Content="Add Menu" HorizontalAlignment="Left" VerticalAlignment="Top"
-                        Width="160" Margin="10,17,0,0" Click="AddMenuButtonClick" />
-                <Button x:Name="AddItemButton" Content="Add Item" VerticalAlignment="Top" Margin="0,17,3,0"
-                        HorizontalAlignment="Right" Width="158" />
+                <Button x:Name="AddMenuButton" Content="Add Menu" VerticalAlignment="Top" Margin="10,17,0,0"
+                        Click="AddMenuButtonClick" HorizontalAlignment="Left" Width="160" />
+                <Button x:Name="AddItemButton" Content="Add Item" Margin="183,17,186,17" Click="AddItemButtonClick"
+                        Height="Auto" Width="160" />
+                <Button x:Name="RemoveObjectButton" Content="Remove" VerticalAlignment="Top" Margin="0,17,10,0"
+                        HorizontalAlignment="Right" Width="160" Click="RemoveObjectButtonClick" />
             </Grid>
         </GroupBox>
 
