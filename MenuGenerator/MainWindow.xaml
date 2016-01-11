@@ -12,9 +12,10 @@
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-        Title="MainWindow" Height="435.57" Width="804.141" WindowStartupLocation="CenterScreen">
+        Title="Menu Generator by ChewyMoon" Height="435.57" Width="804.141" WindowStartupLocation="CenterScreen">
     <Grid>
-        <TreeView x:Name="TreeView" HorizontalAlignment="Left" Width="225" ItemsSource="{Binding Menu}">
+        <TreeView x:Name="TreeView" HorizontalAlignment="Left" Width="225" ItemsSource="{Binding Menu}"
+                  KeyUp="TreeViewOnKeyUp">
             <!--<TreeView.Resources>
                 
                 <HierarchicalDataTemplate DataType="{x:Type self:Menu}">
@@ -28,7 +29,7 @@
             </TreeView.Resources>-->
         </TreeView>
 
-        <GroupBox x:Name="groupBox" Header="Item Control" Height="90" Margin="238,10,17,244" >
+        <GroupBox x:Name="groupBox" Header="Item Control" Height="90" Margin="238,10,17,244">
             <Grid>
                 <Button x:Name="AddMenuButton" Content="Add Menu" VerticalAlignment="Top" Margin="10,17,0,0"
                         Click="AddMenuButtonClick" HorizontalAlignment="Left" Width="160" />
@@ -41,22 +42,33 @@
 
         <GroupBox x:Name="groupBox1" Header="Data" Margin="238,105,17,101" Height="138">
             <Grid>
-                <Label x:Name="NameLabel" Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="60,10,0,0"/>
-                <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Margin="116,10,0,0"/>
+                <Label x:Name="NameLabel" Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Top"
+                       Margin="60,10,0,0" />
+                <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text=""
+                         VerticalAlignment="Top" Width="120" Margin="116,10,0,0" />
 
-                <Label x:Name="DisplayNameLabel" Content="Display Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,42,0,0"/>
-                <TextBox x:Name="DisplayNameTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Margin="116,42,0,0"/>
+                <Label x:Name="DisplayNameLabel" Content="Display Name:" HorizontalAlignment="Left"
+                       VerticalAlignment="Top" Margin="10,42,0,0" />
+                <TextBox x:Name="DisplayNameTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text=""
+                         VerticalAlignment="Top" Width="120" Margin="116,42,0,0" />
 
-                <Label x:Name="ValueTypeLabel" Content="Value Type:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="29,74,0,0"/>
-                <ComboBox x:Name="ValueTypeComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="116,74,0,0" ItemsSource="{Binding Source={utility:EnumValues {x:Type self:MenuValueType}}}" IsEditable="False" SelectedIndex="0"/>
+                <Label x:Name="ValueTypeLabel" Content="Value Type:" HorizontalAlignment="Left" VerticalAlignment="Top"
+                       Margin="29,74,0,0" />
+                <ComboBox x:Name="ValueTypeComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"
+                          Margin="116,74,0,0"
+                          ItemsSource="{Binding Source={utility:EnumValues {x:Type self:MenuValueType}}}"
+                          IsEditable="False" SelectedIndex="0" />
             </Grid>
         </GroupBox>
 
         <GroupBox x:Name="groupBox2" Header="Import &amp; Export" Margin="238,248,17,20" Height="76">
             <Grid>
-                <Button x:Name="LoadButton" Content="Load" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160" Margin="10,10,0,0" Click="LoadButtonClick"/>
-                <Button x:Name="SaveButton" Content="Save" VerticalAlignment="Top" Width="160" Margin="184,10,185,0" Click="SaveButtonClick"/>
-                <Button x:Name="Exportbutton" Content="Export to C#" VerticalAlignment="Top" Margin="0,10,10,0" HorizontalAlignment="Right" Width="160"/>
+                <Button x:Name="LoadButton" Content="Load" HorizontalAlignment="Left" VerticalAlignment="Top"
+                        Width="160" Margin="10,10,0,0" Click="LoadButtonClick" />
+                <Button x:Name="SaveButton" Content="Save" VerticalAlignment="Top" Width="160" Margin="184,10,185,0"
+                        Click="SaveButtonClick" />
+                <Button x:Name="Exportbutton" Content="Export to C#" VerticalAlignment="Top" Margin="0,10,10,0"
+                        HorizontalAlignment="Right" Width="160" />
             </Grid>
         </GroupBox>
     </Grid>

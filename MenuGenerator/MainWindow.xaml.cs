@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Input;
 
     using MenuGenerator.Utility;
 
@@ -212,6 +213,19 @@
                                 PreserveReferencesHandling = PreserveReferencesHandling.Objects,
                                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize
                             }));
+            }
+        }
+
+        /// <summary>
+        ///     Handles the OnKeyUp event of the TreeView control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.KeyEventArgs" /> instance containing the event data.</param>
+        private void TreeViewOnKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete || e.Key == Key.Back)
+            {
+                this.RemoveObjectButtonClick(sender, e);
             }
         }
 
