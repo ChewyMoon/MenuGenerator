@@ -1,45 +1,48 @@
 ﻿namespace MenuGenerator.MenuBinding
 {
+    using System;
+
+    [Flags]
     public enum MenuValueType
     {
         /// <summary>
         ///     No type.
         /// </summary>
-        None,
+        None = 1,
 
         /// <summary>
         ///     The boolean type.
         /// </summary>
-        Boolean,
+        Boolean = 2,
 
         /// <summary>
         ///     The slider type.
         /// </summary>
-        Slider,
+        Slider = 4,
 
         /// <summary>
         ///     The keybind type.
         /// </summary>
-        KeyBind,
+        KeyBind = 8,
 
         /// <summary>
         ///     The integer type.
         /// </summary>
-        Integer,
+        Integer = 16,
 
         /// <summary>
         ///     The color type.
         /// </summary>
-        Color,
+        Color = 32,
 
         /// <summary>
         ///     The circle type.
         /// </summary>
-        Circle,
+        Circle = 64,
 
         /// <summary>
         ///     The string list type.
         /// </summary>
-        StringList
+        StringList = 128
     }
 }

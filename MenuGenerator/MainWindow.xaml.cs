@@ -1,8 +1,15 @@
 ﻿namespace MenuGenerator
 {
+    using System.IO;
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
+
+    using MenuGenerator.Utility;
+
+    using Microsoft.Win32;
+
+    using Newtonsoft.Json;
 
     using Menu = MenuGenerator.MenuBinding.Menu;
     using MenuItem = MenuGenerator.MenuBinding.MenuItem;
@@ -10,7 +17,7 @@
     /// <summary>
     ///     Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow
+    public partial class MainWindow : Window
     {
         #region Constructors and Destructors
 
@@ -119,6 +126,32 @@
         }
 
         /// <summary>
+        ///     Handles the Click event of the LoadButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        private void LoadButtonClick(object sender, RoutedEventArgs e)
+        {
+            var dialog = new OpenFileDialog { DefaultExt = ".json", Filter = "JSON File (*.json}|*.json" };
+
+            var result = dialog.ShowDialog(this);
+
+            if (result != true)
+            {
+                return;
+            }
+
+            this.Menu = JsonConvert.DeserializeObject<Menu>(
+                File.ReadAllText(dialog.FileName),
+                new JsonSerializerSettings()
+                    {
+                        PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+                        ReferenceLoopHandling = ReferenceLoopHandling.Serialize
+                    });
+            this.UpdateTree();
+        }
+
+        /// <summary>
         ///     Handles the Click event of the RemoveObjectButton control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -155,6 +188,31 @@
             }
 
             this.UpdateTree();
+        }
+
+        /// <summary>
+        ///     Handles the Click event of the SaveButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        private void SaveButtonClick(object sender, RoutedEventArgs e)
+        {
+            var dialog = new SaveFileDialog { DefaultExt = ".json", Filter = "JSON File (*.json}|*.json" };
+
+            var result = dialog.ShowDialog(this);
+            if (result == true)
+            {
+                File.WriteAllText(
+                    dialog.FileName,
+                    JsonConvert.SerializeObject(
+                        this.Menu,
+                        Formatting.Indented,
+                        new JsonSerializerSettings()
+                            {
+                                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+                                ReferenceLoopHandling = ReferenceLoopHandling.Serialize
+                            }));
+            }
         }
 
         /// <summary>

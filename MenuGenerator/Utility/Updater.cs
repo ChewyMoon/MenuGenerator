@@ -1,4 +1,4 @@
-﻿namespace MenuGenerator
+﻿namespace MenuGenerator.Utility
 {
     /// <summary>
     ///     Updates this program.

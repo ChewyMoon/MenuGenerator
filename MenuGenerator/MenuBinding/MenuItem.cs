@@ -34,15 +34,7 @@
         /// <value>
         ///     The value.
         /// </value>
-        public MenuItemValue Value { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the type of the value.
-        /// </summary>
-        /// <value>
-        ///     The type of the value.
-        /// </value>
-        public MenuValueType ValueType { get; set; }
+        public MenuItemValue Value { get; set; } = new MenuItemValue(MenuValueType.None);
 
         #endregion
     }
