@@ -172,11 +172,6 @@
 
                 if (menu == this.Menu)
                 {
-                    MessageBox.Show(
-                        "You can't delete the root menu!",
-                        "Error!",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error);
                     return;
                 }
 
